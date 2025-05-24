@@ -14,7 +14,6 @@ export const CartButton: React.FC<CartButtonProps> = ({ itemCount }) => {
     <Link to="/cart">
       <Button variant="outline" className="relative group">
         <Icon icon={ShoppingCart} size="sm" className="group-hover:animate-bounce" />
-        Cart
         {itemCount > 0 && (
           <Badge
             variant="primary"

@@ -17,6 +17,7 @@ interface ProductCardProps {
 export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const { addToCart } = useCart()
   const [isLoading, setIsLoading] = useState(false)
+  const [imageError, setImageError] = useState(false)
 
   const handleAddToCart = () => {
     setIsLoading(true)
@@ -24,6 +25,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       addToCart(product, 1)
       setIsLoading(false)
     }, 500)
+  }
+
+  const handleImageError = () => {
+    setImageError(true)
   }
 
   const getBadgeVariant = () => {
@@ -58,9 +63,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       <Link to={`/products/${product.id}`}>
         <div className="relative h-48 overflow-hidden cursor-pointer">
           <img
-            src={product.image || "https://via.placeholder.com/400x400/1f2937/8b5cf6?text=Product"}
+            src={imageError ? "https://via.placeholder.com/400x400/1f2937/8b5cf6?text=Product" : product.image}
             alt={product.name}
             className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+            onError={handleImageError}
           />
         </div>
       </Link>

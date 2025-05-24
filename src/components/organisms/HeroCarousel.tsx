@@ -19,18 +19,28 @@ export const HeroCarousel: React.FC<HeroCarouselProps> = ({ onCategoryClick }) =
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % HERO_SLIDES.length)
+      setCurrentSlide((prev) => {
+        // Para no último slide e volta para o primeiro
+        if (prev >= HERO_SLIDES.length - 1) {
+          return 0
+        }
+        return prev + 1
+      })
     }, 7000)
 
     return () => clearInterval(interval)
   }, [])
 
   const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % HERO_SLIDES.length)
+    if (currentSlide < HERO_SLIDES.length - 1) {
+      setCurrentSlide((prev) => prev + 1)
+    }
   }
 
   const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + HERO_SLIDES.length) % HERO_SLIDES.length)
+    if (currentSlide > 0) {
+      setCurrentSlide((prev) => prev - 1)
+    }
   }
 
   const handleSlideAction = (action: string) => {
@@ -48,8 +58,8 @@ export const HeroCarousel: React.FC<HeroCarouselProps> = ({ onCategoryClick }) =
   }
 
   return (
-    <div className="relative rounded-3xl overflow-hidden">
-      <div className="relative h-[600px]">
+    <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+      <div className="relative h-[500px] md:h-[600px]">
         {HERO_SLIDES.map((slide, index) => (
           <div
             key={index}
@@ -61,7 +71,7 @@ export const HeroCarousel: React.FC<HeroCarouselProps> = ({ onCategoryClick }) =
                   : "opacity-0 translate-x-full"
             }`}
           >
-            <div className={`h-full bg-gradient-to-r ${slide.gradient} p-12 relative overflow-hidden`}>
+            <div className={`h-full bg-gradient-to-r ${slide.gradient} p-8 md:p-12 relative overflow-hidden`}>
               {/* Background Pattern */}
               <div className="absolute inset-0 opacity-10">
                 <div className="absolute top-10 left-10 w-32 h-32 border border-white/20 rounded-full animate-pulse"></div>
@@ -95,20 +105,18 @@ export const HeroCarousel: React.FC<HeroCarouselProps> = ({ onCategoryClick }) =
 
                 <Typography
                   variant="h1"
-                  size="6xl"
+                  size="5xl"
                   weight="bold"
-                  className="mb-6 bg-gradient-to-r from-white via-purple-200 to-cyan-200 bg-clip-text text-transparent leading-tight animate-fade-in-up"
-                  style={{ animationDelay: "0.2s" }}
+                  className="mb-6 bg-gradient-to-r from-white via-purple-200 to-cyan-200 bg-clip-text text-transparent leading-tight animate-fade-in-up [animation-delay:0.2s] md:text-6xl"
                 >
                   {slide.title}
                 </Typography>
 
                 <Typography
                   variant="p"
-                  size="xl"
+                  size="lg"
                   color="gray"
-                  className="mb-8 leading-relaxed animate-fade-in-up"
-                  style={{ animationDelay: "0.4s" }}
+                  className="mb-8 leading-relaxed animate-fade-in-up [animation-delay:0.4s] md:text-xl max-w-2xl"
                 >
                   {slide.description}
                 </Typography>
@@ -125,33 +133,35 @@ export const HeroCarousel: React.FC<HeroCarouselProps> = ({ onCategoryClick }) =
         ))}
       </div>
 
-      {/* Controls */}
-      <Button
-        variant="ghost"
-        size="lg"
-        onClick={prevSlide}
-        className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-black/50 hover:bg-black/70 rounded-full p-0"
-      >
-        <Icon icon={ChevronLeft} size="lg" />
-      </Button>
+      {/* Navigation Controls */}
+      {currentSlide > 0 && (
+        <button
+          onClick={prevSlide}
+          className="absolute left-3 top-1/2 -translate-y-1/2 bg-black/20 hover:bg-black/40 backdrop-blur-sm rounded-lg p-2 transition-all duration-200 group opacity-60 hover:opacity-100"
+        >
+          <Icon icon={ChevronLeft} size="md" className="text-white group-hover:scale-110 transition-transform" />
+        </button>
+      )}
 
-      <Button
-        variant="ghost"
-        size="lg"
-        onClick={nextSlide}
-        className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-black/50 hover:bg-black/70 rounded-full p-0"
-      >
-        <Icon icon={ChevronRight} size="lg" />
-      </Button>
+      {currentSlide < HERO_SLIDES.length - 1 && (
+        <button
+          onClick={nextSlide}
+          className="absolute right-3 top-1/2 -translate-y-1/2 bg-black/20 hover:bg-black/40 backdrop-blur-sm rounded-lg p-2 transition-all duration-200 group opacity-60 hover:opacity-100"
+        >
+          <Icon icon={ChevronRight} size="md" className="text-white group-hover:scale-110 transition-transform" />
+        </button>
+      )}
 
-      {/* Indicators */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2">
+      {/* Slide Indicators */}
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5">
         {HERO_SLIDES.map((_, index) => (
           <button
             key={index}
             onClick={() => setCurrentSlide(index)}
-            className={`w-3 h-3 rounded-full transition-all duration-300 ${
-              index === currentSlide ? "bg-purple-500 scale-125" : "bg-white/30 hover:bg-white/50"
+            className={`transition-all duration-300 rounded-full ${
+              index === currentSlide 
+                ? "w-8 h-2 bg-white" 
+                : "w-2 h-2 bg-white/40 hover:bg-white/60"
             }`}
           />
         ))}

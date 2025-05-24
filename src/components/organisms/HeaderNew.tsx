@@ -17,10 +17,9 @@ interface HeaderProps {
   onSearchChange: (value: string) => void
   onLogoClick: () => void
   onProfileClick: () => void
-  onCategoryClick: (category: string) => void
 }
 
-export const Header: React.FC<HeaderProps> = ({ searchTerm, onSearchChange, onLogoClick, onProfileClick, onCategoryClick }) => {
+export const Header: React.FC<HeaderProps> = ({ searchTerm, onSearchChange, onLogoClick, onProfileClick }) => {
   const { cart } = useCart()
   const { user } = useUser()
   const [isSearchOpen, setIsSearchOpen] = useState(false)
@@ -66,7 +65,6 @@ export const Header: React.FC<HeaderProps> = ({ searchTerm, onSearchChange, onLo
         onClose={handleSearchClose}
         searchTerm={searchTerm}
         onSearchChange={onSearchChange}
-        onCategoryClick={onCategoryClick}
       />
     </>
   )

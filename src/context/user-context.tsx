@@ -22,9 +22,9 @@ const UserContext = createContext<UserContextType | undefined>(undefined)
 // Mock user data
 const mockUser: User = {
   id: "user-001",
-  name: "Alex Rodriguez",
-  email: "alex.rodriguez@rocket.com",
-  avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
+  name: "Lorenzo Chaves",
+  email: "lorenzo@rocket.com",
+  avatar: "@/public/",
   joinDate: "2024-01-15",
 }
 
@@ -79,7 +79,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setOrders((prevOrders) => [newOrder, ...prevOrders])
   }
 
-  const getUserStats = () => {
+const getUserStats = () => {
     const totalOrders = orders.length
     const totalSpent = orders.reduce((sum, order) => sum + order.total, 0)
 

@@ -32,7 +32,7 @@ const CheckoutPage: React.FC = () => {
 
   const subtotal = cart.reduce((total, item) => total + item.product.price * item.quantity, 0)
 
-  const handleSubmit = (formData: any) => {
+  const handleSubmit = (_formData: any) => {
     setIsSubmitting(true)
 
     // Simulate API call

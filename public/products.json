@@ -4,41 +4,170 @@
     "name": "Quantum Hover Board",
     "description": "Experience the future of personal transportation with our anti-gravity hover technology. Effortlessly glide above any surface with precision control and zero emissions. This revolutionary device uses quantum field manipulation to achieve true levitation, making it the ultimate eco-friendly transportation solution.",
     "price": 599.99,
-    "image": "https://via.placeholder.com/400x400/1f2937/8b5cf6?text=Quantum+Hover+Board"
+    "image": "https://via.placeholder.com/400x400/1f2937/8b5cf6?text=Quantum+Hover+Board",
+    "category": "transportation",
+    "badge": "bestseller",
+    "rank": 1
   },
   {
     "id": "2",
     "name": "Neural Interface Headset",
     "description": "Control your smart home devices with just your thoughts using advanced brain-computer interface technology. This cutting-edge headset reads neural signals and translates them into digital commands, allowing seamless interaction with your connected devices without lifting a finger.",
     "price": 349.99,
-    "image": "https://via.placeholder.com/400x400/1f2937/8b5cf6?text=Neural+Interface"
+    "image": "https://via.placeholder.com/400x400/1f2937/8b5cf6?text=Neural+Interface",
+    "category": "neural-tech"
   },
   {
     "id": "3",
     "name": "Holographic Display Watch",
     "description": "More than just a timepiece, this watch projects interactive holographic displays for communication, navigation, and entertainment on the go. Features include 3D holographic projections, gesture controls, and seamless integration with all your devices.",
     "price": 299.99,
-    "image": "https://via.placeholder.com/400x400/1f2937/8b5cf6?text=Holographic+Watch"
+    "image": "https://via.placeholder.com/400x400/1f2937/8b5cf6?text=Holographic+Watch",
+    "category": "wearables"
   },
   {
     "id": "4",
     "name": "Atmospheric Water Generator",
     "description": "Never worry about water supply again. This portable device extracts moisture from the air, providing clean drinking water anywhere on the planet. Uses advanced condensation technology and built-in purification systems to ensure the highest quality water.",
     "price": 199.99,
-    "image": "https://via.placeholder.com/400x400/1f2937/8b5cf6?text=Water+Generator"
+    "image": "https://via.placeholder.com/400x400/1f2937/8b5cf6?text=Water+Generator",
+    "category": "home-living"
   },
   {
     "id": "5",
     "name": "Modular Smart Clothing",
     "description": "Clothing that adapts to your environment with embedded temperature regulation, color-changing fabric, and built-in health monitoring. The fabric responds to environmental conditions and your body's needs, providing optimal comfort in any situation.",
     "price": 149.99,
-    "image": "https://via.placeholder.com/400x400/1f2937/8b5cf6?text=Smart+Clothing"
+    "image": "https://via.placeholder.com/400x400/1f2937/8b5cf6?text=Smart+Clothing",
+    "category": "wearables"
   },
   {
     "id": "6",
     "name": "Drone Companion",
     "description": "Your personal flying assistant that follows you autonomously, captures memories, and helps with daily tasks through advanced AI. Features include obstacle avoidance, 4K video recording, and intelligent task automation.",
     "price": 499.99,
-    "image": "https://via.placeholder.com/400x400/1f2937/8b5cf6?text=Drone+Companion"
+    "image": "https://via.placeholder.com/400x400/1f2937/8b5cf6?text=Drone+Companion",
+    "category": "transportation"
+  },
+  {
+    "id": "7",
+    "name": "Gravity Defying Motorcycle",
+    "description": "Revolutionary motorcycle that uses magnetic levitation to hover above any surface. Equipped with quantum propulsion system, reaching speeds up to 200mph while maintaining perfect stability and zero environmental impact.",
+    "price": 2499.99,
+    "image": "https://via.placeholder.com/400x400/1f2937/8b5cf6?text=Gravity+Motorcycle",
+    "category": "transportation"
+  },
+  {
+    "id": "8",
+    "name": "Teleportation Pod",
+    "description": "Personal teleportation device for instant travel up to 50 miles. Uses quantum entanglement technology to safely transport you and your belongings across vast distances in mere seconds. Perfect for daily commuting.",
+    "price": 4999.99,
+    "image": "https://via.placeholder.com/400x400/1f2937/8b5cf6?text=Teleportation+Pod",
+    "category": "transportation"
+  },
+  {
+    "id": "9",
+    "name": "Flying Car Capsule",
+    "description": "Compact flying vehicle that transforms from ground car to aerial transport. Features autopilot AI, collision avoidance, and vertical takeoff capabilities. Seats 4 passengers comfortably with luxury interior.",
+    "price": 1899.99,
+    "image": "https://via.placeholder.com/400x400/1f2937/8b5cf6?text=Flying+Car",
+    "category": "transportation"
+  },
+  {
+    "id": "10",
+    "name": "Mind Reading Glasses",
+    "description": "Advanced neural glasses that can interpret thoughts and emotions of people around you. Features real-time translation of mental states, mood detection, and intention prediction with 99.7% accuracy.",
+    "price": 799.99,
+    "image": "https://via.placeholder.com/400x400/1f2937/8b5cf6?text=Mind+Reading+Glasses",
+    "category": "neural-tech"
+  },
+  {
+    "id": "11",
+    "name": "Dream Recording Device",
+    "description": "Capture and replay your dreams in vivid detail. This neural device records brain activity during sleep and converts it into watchable video content. Share your dreams or analyze them for insights.",
+    "price": 1299.99,
+    "image": "https://via.placeholder.com/400x400/1f2937/8b5cf6?text=Dream+Recorder",
+    "category": "neural-tech",
+    "badge": "bestseller",
+    "rank": 4
+  },
+  {
+    "id": "12",
+    "name": "Telepathic Communication Chip",
+    "description": "Implantable chip that enables direct mind-to-mind communication with other chip users. Send thoughts, emotions, and even images instantly across any distance. Includes encryption for private conversations.",
+    "price": 2199.99,
+    "image": "https://via.placeholder.com/400x400/1f2937/8b5cf6?text=Telepathic+Chip",
+    "category": "neural-tech"
+  },
+  {
+    "id": "13",
+    "name": "Memory Enhancement Headband",
+    "description": "Boost your cognitive abilities with this neural enhancement device. Improves memory retention by 300%, accelerates learning speed, and enhances focus. Perfect for students and professionals.",
+    "price": 899.99,
+    "image": "https://via.placeholder.com/400x400/1f2937/8b5cf6?text=Memory+Headband",
+    "category": "neural-tech"
+  },
+  {
+    "id": "14",
+    "name": "Invisibility Cloak",
+    "description": "True optical invisibility using metamaterial technology. This lightweight cloak bends light around the wearer, making them completely invisible to the naked eye and most detection systems.",
+    "price": 3499.99,
+    "image": "https://via.placeholder.com/400x400/1f2937/8b5cf6?text=Invisibility+Cloak",
+    "category": "wearables",
+    "badge": "bestseller",
+    "rank": 3
+  },
+  {
+    "id": "15",
+    "name": "Shape-Shifting Suit",
+    "description": "Adaptive clothing that changes style, color, and even material based on your needs. From formal business attire to athletic wear, this suit transforms instantly using programmable smart fibers.",
+    "price": 1599.99,
+    "image": "https://via.placeholder.com/400x400/1f2937/8b5cf6?text=Shape+Shifting+Suit",
+    "category": "wearables"
+  },
+  {
+    "id": "16",
+    "name": "Superhuman Strength Gloves",
+    "description": "Exoskeleton gloves that amplify your grip strength by 1000%. Lift cars, crush steel, or perform delicate tasks with perfect precision. Powered by micro fusion cells with 30-day battery life.",
+    "price": 2799.99,
+    "image": "https://via.placeholder.com/400x400/1f2937/8b5cf6?text=Strength+Gloves",
+    "category": "wearables"
+  },
+  {
+    "id": "17",
+    "name": "Time Dilation Boots",
+    "description": "Experience time differently with these quantum boots. Slow down your perception of time to react faster or speed it up to make boring tasks pass quickly. Adjustable time ratios from 0.1x to 10x.",
+    "price": 4299.99,
+    "image": "https://via.placeholder.com/400x400/1f2937/8b5cf6?text=Time+Boots",
+    "category": "wearables",
+    "badge": "new"
+  },
+  {
+    "id": "18",
+    "name": "AI Home Butler Robot",
+    "description": "Fully autonomous household assistant that manages your entire home. Cooks, cleans, organizes, and even provides companionship. Features advanced AI personality and learning capabilities.",
+    "price": 8999.99,
+    "image": "https://via.placeholder.com/400x400/1f2937/8b5cf6?text=Butler+Robot",
+    "category": "home-living",
+    "badge": "bestseller",
+    "rank": 2
+  },
+  {
+    "id": "19",
+    "name": "Holographic Room Projector",
+    "description": "Transform any room into any environment with this advanced holographic system. Visit ancient Rome, walk on Mars, or relax on a tropical beach - all from your living room with full sensory immersion.",
+    "price": 5499.99,
+    "image": "https://via.placeholder.com/400x400/1f2937/8b5cf6?text=Holo+Projector",
+    "category": "home-living",
+    "badge": "new"
+  },
+  {
+    "id": "20",
+    "name": "Quantum Food Synthesizer",
+    "description": "Create any meal instantly from basic molecular components. This device can synthesize restaurant-quality food with perfect nutrition, taste, and texture. Includes 10,000+ recipe database.",
+    "price": 3299.99,
+    "image": "https://via.placeholder.com/400x400/1f2937/8b5cf6?text=Food+Synthesizer",
+    "category": "home-living",
+    "badge": "new"
   }
 ]

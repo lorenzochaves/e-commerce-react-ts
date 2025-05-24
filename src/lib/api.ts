@@ -1,6 +1,6 @@
 import type { Product } from "./types"
 
-export async function getProducts(): Promise<Product[]> {
+export const getProducts = async (): Promise<Product[]> => {
   try {
     const response = await fetch("/products.json")
     if (!response.ok) {
@@ -14,10 +14,11 @@ export async function getProducts(): Promise<Product[]> {
   }
 }
 
-export async function getProductById(id: string): Promise<Product | null> {
+export const getProductById = async (id: string): Promise<Product | null> => {
   try {
     const products = await getProducts()
-    return products.find((product) => product.id === id) || null
+    const product = products.find((product) => product.id === id)
+    return product || null
   } catch (error) {
     console.error("Error loading product:", error)
     return null

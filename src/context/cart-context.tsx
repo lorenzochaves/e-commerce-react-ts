@@ -2,49 +2,36 @@
 
 import type React from "react"
 import { createContext, useContext, useEffect, useState } from "react"
-import type { Product } from "@/lib/types"
+import { useLocalStorage } from "@/hooks/useLocalStorage"
+import { generateId } from "@/lib/utils"
+import type { Product, CartItem, CartNotification } from "@/lib/types"
 
-type CartItem = {
-  product: Product
-  quantity: number
-}
-
-type CartContextType = {
+interface CartContextType {
   cart: CartItem[]
+  notifications: CartNotification[]
   addToCart: (product: Product, quantity: number) => void
   removeFromCart: (productId: string) => void
   updateQuantity: (productId: string, quantity: number) => void
   clearCart: () => void
+  removeNotification: (id: string) => void
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined)
 
-export function CartProvider({ children }: { children: React.ReactNode }) {
-  const [cart, setCart] = useState<CartItem[]>([])
-  const [isInitialized, setIsInitialized] = useState(false)
+export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [cart, setCart] = useLocalStorage<CartItem[]>("rocket-cart", [])
+  const [notifications, setNotifications] = useState<CartNotification[]>([])
 
-  // Load cart from localStorage on mount
+  // Auto-remove notifications after 3 seconds
   useEffect(() => {
-    const savedCart = localStorage.getItem("rocket-cart-user-001") // Using fixed user ID for now
-    if (savedCart) {
-      try {
-        const parsedCart = JSON.parse(savedCart)
-        console.log("Loading cart from localStorage:", parsedCart)
-        setCart(parsedCart)
-      } catch (error) {
-        console.error("Failed to parse cart from localStorage:", error)
-      }
-    }
-    setIsInitialized(true)
-  }, [])
+    notifications.forEach((notification) => {
+      const timer = setTimeout(() => {
+        removeNotification(notification.id)
+      }, 3000)
 
-  // Save cart to localStorage whenever it changes (but only after initialization)
-  useEffect(() => {
-    if (isInitialized) {
-      console.log("Saving cart to localStorage:", cart)
-      localStorage.setItem("rocket-cart-user-001", JSON.stringify(cart))
-    }
-  }, [cart, isInitialized])
+      return () => clearTimeout(timer)
+    })
+  }, [notifications])
 
   const addToCart = (product: Product, quantity: number) => {
     setCart((prevCart) => {
@@ -58,6 +45,16 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
       return [...prevCart, { product, quantity }]
     })
+
+    // Add notification
+    const notification: CartNotification = {
+      id: generateId(),
+      product,
+      quantity,
+      timestamp: Date.now(),
+    }
+
+    setNotifications((prev) => [...prev, notification])
   }
 
   const removeFromCart = (productId: string) => {
@@ -72,14 +69,20 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     setCart([])
   }
 
+  const removeNotification = (id: string) => {
+    setNotifications((prev) => prev.filter((notification) => notification.id !== id))
+  }
+
   return (
     <CartContext.Provider
       value={{
         cart,
+        notifications,
         addToCart,
         removeFromCart,
         updateQuantity,
         clearCart,
+        removeNotification,
       }}
     >
       {children}
@@ -87,7 +90,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   )
 }
 
-export function useCart() {
+export const useCart = () => {
   const context = useContext(CartContext)
   if (context === undefined) {
     throw new Error("useCart must be used within a CartProvider")

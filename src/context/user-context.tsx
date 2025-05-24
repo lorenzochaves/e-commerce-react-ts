@@ -2,12 +2,14 @@
 
 import type React from "react"
 import { createContext, useContext, useEffect, useState } from "react"
-import type { User, Order, Product } from "@/lib/types"
+import { useLocalStorage } from "@/hooks/useLocalStorage"
+import { generateId } from "@/lib/utils"
+import type { User, Order, CartItem } from "@/lib/types"
 
-type UserContextType = {
+interface UserContextType {
   user: User | null
   orders: Order[]
-  addOrder: (items: Array<{ product: Product; quantity: number }>, total: number) => void
+  addOrder: (items: CartItem[], total: number) => void
   getUserStats: () => {
     totalOrders: number
     totalSpent: number
@@ -26,22 +28,13 @@ const mockUser: User = {
   joinDate: "2024-01-15",
 }
 
-export function UserProvider({ children }: { children: React.ReactNode }) {
+export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user] = useState<User>(mockUser)
-  const [orders, setOrders] = useState<Order[]>([])
+  const [orders, setOrders] = useLocalStorage<Order[]>(`rocket-orders-${mockUser.id}`, [])
 
   useEffect(() => {
-    // Load orders from localStorage
-    const savedOrders = localStorage.getItem(`rocket-orders-${user.id}`)
-    if (savedOrders) {
-      try {
-        const parsedOrders = JSON.parse(savedOrders)
-        setOrders(parsedOrders)
-      } catch (error) {
-        console.error("Failed to load orders:", error)
-      }
-    } else {
-      // Create some mock orders for demo
+    // Create mock orders if none exist
+    if (orders.length === 0) {
       const mockOrders: Order[] = [
         {
           id: "order-001",
@@ -54,6 +47,7 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
                 description: "Experience the future of personal transportation",
                 price: 599.99,
                 image: "https://via.placeholder.com/400x400/1f2937/8b5cf6?text=Quantum+Hover+Board",
+                category: "transportation",
               },
               quantity: 1,
               priceAtTime: 599.99,
@@ -64,53 +58,14 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
           orderDate: "2024-12-15T10:30:00Z",
           deliveryDate: "2024-12-18T14:20:00Z",
         },
-        {
-          id: "order-002",
-          userId: user.id,
-          items: [
-            {
-              product: {
-                id: "2",
-                name: "Neural Interface Headset",
-                description: "Control your smart home devices with thoughts",
-                price: 349.99,
-                image: "https://via.placeholder.com/400x400/1f2937/8b5cf6?text=Neural+Interface",
-              },
-              quantity: 1,
-              priceAtTime: 349.99,
-            },
-            {
-              product: {
-                id: "3",
-                name: "Holographic Display Watch",
-                description: "Interactive holographic displays on your wrist",
-                price: 299.99,
-                image: "https://via.placeholder.com/400x400/1f2937/8b5cf6?text=Holographic+Watch",
-              },
-              quantity: 2,
-              priceAtTime: 299.99,
-            },
-          ],
-          total: 949.97,
-          status: "shipped",
-          orderDate: "2024-12-20T15:45:00Z",
-        },
       ]
       setOrders(mockOrders)
-      localStorage.setItem(`rocket-orders-${user.id}`, JSON.stringify(mockOrders))
     }
-  }, [user.id])
+  }, [])
 
-  useEffect(() => {
-    // Save orders to localStorage whenever they change
-    if (orders.length > 0) {
-      localStorage.setItem(`rocket-orders-${user.id}`, JSON.stringify(orders))
-    }
-  }, [orders, user.id])
-
-  const addOrder = (items: Array<{ product: Product; quantity: number }>, total: number) => {
+  const addOrder = (items: CartItem[], total: number) => {
     const newOrder: Order = {
-      id: `order-${Date.now()}`,
+      id: generateId(),
       userId: user.id,
       items: items.map((item) => ({
         ...item,
@@ -128,11 +83,11 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
     const totalOrders = orders.length
     const totalSpent = orders.reduce((sum, order) => sum + order.total, 0)
 
-    // Calculate favorite category (simplified)
+    // Calculate favorite category
     const categoryCount: Record<string, number> = {}
     orders.forEach((order) => {
       order.items.forEach((item) => {
-        const category = item.product.name.split(" ")[0] // Simple category extraction
+        const category = item.product.category
         categoryCount[category] = (categoryCount[category] || 0) + item.quantity
       })
     })
@@ -159,7 +114,7 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
   )
 }
 
-export function useUser() {
+export const useUser = () => {
   const context = useContext(UserContext)
   if (context === undefined) {
     throw new Error("useUser must be used within a UserProvider")

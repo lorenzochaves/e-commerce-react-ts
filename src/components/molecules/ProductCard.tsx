@@ -1,10 +1,12 @@
 "use client"
 
 import type React from "react"
-
 import { useState } from "react"
 import { ShoppingCart } from "lucide-react"
 import { Link } from "react-router-dom"
+import { Button } from "@/components/atoms/Button"
+import { Badge } from "@/components/atoms/Badge"
+import { Icon } from "@/components/atoms/Icon"
 import { useCart } from "@/context/cart-context"
 import type { Product } from "@/lib/types"
 
@@ -24,8 +26,35 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     }, 500)
   }
 
+  const getBadgeVariant = () => {
+    if (product.badge === "bestseller") return "warning"
+    if (product.badge === "new") return "success"
+    return "primary"
+  }
+
+  const getBadgeContent = () => {
+    if (product.badge === "bestseller" && product.rank) {
+      return `#${product.rank}`
+    }
+    if (product.badge === "new") {
+      return "NEW"
+    }
+    return null
+  }
+
+  const badgeContent = getBadgeContent()
+
   return (
-    <div className="overflow-hidden bg-gray-900 border border-gray-800 rounded-lg transition-all duration-300 hover:border-purple-500 hover:shadow-[0_0_15px_rgba(168,85,247,0.3)]">
+    <div className="overflow-hidden bg-gray-900 border border-gray-800 rounded-lg transition-all duration-300 hover:border-purple-500 hover:shadow-[0_0_15px_rgba(168,85,247,0.3)] relative">
+      {/* Badge */}
+      {badgeContent && (
+        <div className="absolute top-4 left-4 z-10">
+          <Badge variant={getBadgeVariant()} size="sm">
+            {badgeContent}
+          </Badge>
+        </div>
+      )}
+
       <Link to={`/products/${product.id}`}>
         <div className="relative h-48 overflow-hidden cursor-pointer">
           <img
@@ -35,18 +64,16 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           />
         </div>
       </Link>
+
       <div className="p-4">
         <h3 className="font-semibold text-lg mb-1 text-white">{product.name}</h3>
         <p className="text-gray-400 text-sm mb-2 line-clamp-2">{product.description}</p>
         <p className="text-purple-400 font-bold mb-4">${product.price.toFixed(2)}</p>
-        <button
-          onClick={handleAddToCart}
-          className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-md transition-colors disabled:opacity-50"
-          disabled={isLoading}
-        >
-          <ShoppingCart className="h-4 w-4" />
+
+        <Button onClick={handleAddToCart} isLoading={isLoading} className="w-full">
+          <Icon icon={ShoppingCart} size="sm" />
           {isLoading ? "Adding..." : "Add to Cart"}
-        </button>
+        </Button>
       </div>
     </div>
   )

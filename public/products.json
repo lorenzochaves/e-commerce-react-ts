@@ -1,0 +1,44 @@
+[
+  {
+    "id": "1",
+    "name": "Quantum Hover Board",
+    "description": "Experience the future of personal transportation with our anti-gravity hover technology. Effortlessly glide above any surface with precision control and zero emissions. This revolutionary device uses quantum field manipulation to achieve true levitation, making it the ultimate eco-friendly transportation solution.",
+    "price": 599.99,
+    "image": "https://via.placeholder.com/400x400/1f2937/8b5cf6?text=Quantum+Hover+Board"
+  },
+  {
+    "id": "2",
+    "name": "Neural Interface Headset",
+    "description": "Control your smart home devices with just your thoughts using advanced brain-computer interface technology. This cutting-edge headset reads neural signals and translates them into digital commands, allowing seamless interaction with your connected devices without lifting a finger.",
+    "price": 349.99,
+    "image": "https://via.placeholder.com/400x400/1f2937/8b5cf6?text=Neural+Interface"
+  },
+  {
+    "id": "3",
+    "name": "Holographic Display Watch",
+    "description": "More than just a timepiece, this watch projects interactive holographic displays for communication, navigation, and entertainment on the go. Features include 3D holographic projections, gesture controls, and seamless integration with all your devices.",
+    "price": 299.99,
+    "image": "https://via.placeholder.com/400x400/1f2937/8b5cf6?text=Holographic+Watch"
+  },
+  {
+    "id": "4",
+    "name": "Atmospheric Water Generator",
+    "description": "Never worry about water supply again. This portable device extracts moisture from the air, providing clean drinking water anywhere on the planet. Uses advanced condensation technology and built-in purification systems to ensure the highest quality water.",
+    "price": 199.99,
+    "image": "https://via.placeholder.com/400x400/1f2937/8b5cf6?text=Water+Generator"
+  },
+  {
+    "id": "5",
+    "name": "Modular Smart Clothing",
+    "description": "Clothing that adapts to your environment with embedded temperature regulation, color-changing fabric, and built-in health monitoring. The fabric responds to environmental conditions and your body's needs, providing optimal comfort in any situation.",
+    "price": 149.99,
+    "image": "https://via.placeholder.com/400x400/1f2937/8b5cf6?text=Smart+Clothing"
+  },
+  {
+    "id": "6",
+    "name": "Drone Companion",
+    "description": "Your personal flying assistant that follows you autonomously, captures memories, and helps with daily tasks through advanced AI. Features include obstacle avoidance, 4K video recording, and intelligent task automation.",
+    "price": 499.99,
+    "image": "https://via.placeholder.com/400x400/1f2937/8b5cf6?text=Drone+Companion"
+  }
+]

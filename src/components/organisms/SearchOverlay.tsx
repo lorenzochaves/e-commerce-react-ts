@@ -12,7 +12,8 @@ interface SearchOverlayProps {
   isOpen: boolean
   onClose: () => void
   searchTerm: string
-  onSearchChange: (value: string) => void
+  onSearchChange: (value: string) => void // mantido para compatibilidade
+  onSearch: (value: string) => void
   onCategoryClick?: (category: string) => void
 }
 
@@ -20,7 +21,7 @@ export const SearchOverlay: React.FC<SearchOverlayProps> = ({
   isOpen,
   onClose,
   searchTerm,
-  onSearchChange,
+  onSearch,
   onCategoryClick = () => {}, // valor padrão caso não seja fornecido
 }) => {
   const overlayRef = useRef<HTMLDivElement>(null)
@@ -29,26 +30,29 @@ export const SearchOverlay: React.FC<SearchOverlayProps> = ({
   // Função para lidar com a busca quando o usuário confirmar (pressionar Enter ou clicar no ícone)
   const handleSearch = (value: string) => {
     if (value.trim()) {
-      onSearchChange(value) // Só atualiza o termo de busca global aqui
-      onClose()
-      console.log(`Pesquisando por: ${value}`)
+      onSearch(value) // Usa a função onSearch do contexto
+      
+      // Fechar o overlay após a busca
+      setTimeout(() => onClose(), 100)
     }
   }
 
   // Função para lidar com mudanças no input sem acionar a busca
   const handleLocalChange = (value: string) => {
-    // Apenas atualiza o estado local, sem acionar a busca
+    // Apenas atualiza o estado local, sem acionar o estado global
     setLocalSearchTerm(value)
   }
   
-  // Atualiza o termo de busca local quando o searchTerm global mudar
-  React.useEffect(() => {
+  // Sincronizar o estado local quando o overlay for aberto ou o termo de busca mudar
+  useEffect(() => {
     setLocalSearchTerm(searchTerm)
-  }, [searchTerm])
+  }, [searchTerm, isOpen])
+  
+  // Isso foi substituído pelo useEffect adicionado mais acima
+  // que sincroniza quando o overlay é aberto ou o termo de busca muda
 
-  const handleMouseLeave = () => {
-    onClose()
-  }
+  // Remover o fechamento automático quando o mouse sai do overlay
+  // para evitar que o usuário perca o que estava digitando
 
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
@@ -63,15 +67,35 @@ export const SearchOverlay: React.FC<SearchOverlayProps> = ({
       }
     }
 
+    // Função para fechar quando o mouse sair da área do overlay
+    const handleMouseLeave = () => {
+      // Adicionar um pequeno delay para evitar fechamento acidental
+      setTimeout(() => {
+        onClose()
+      }, 200)
+    }
+
     if (isOpen) {
       document.addEventListener("keydown", handleEscape)
       document.addEventListener("mousedown", handleClickOutside)
+      
+      // Adicionar event listener para mouse leave no overlay
+      if (overlayRef.current) {
+        overlayRef.current.addEventListener("mouseleave", handleMouseLeave)
+      }
+      
       document.body.style.overflow = "hidden"
     }
 
     return () => {
       document.removeEventListener("keydown", handleEscape)
       document.removeEventListener("mousedown", handleClickOutside)
+      
+      // Remover event listener para mouse leave
+      if (overlayRef.current) {
+        overlayRef.current.removeEventListener("mouseleave", handleMouseLeave)
+      }
+      
       document.body.style.overflow = "unset"
     }
   }, [isOpen, onClose])
@@ -82,7 +106,6 @@ export const SearchOverlay: React.FC<SearchOverlayProps> = ({
     <div className="fixed inset-0 pt-[72px] z-30 bg-black/60 backdrop-blur-md transition-all duration-300">
       <div 
         ref={overlayRef}
-        onMouseLeave={handleMouseLeave}
         className="absolute top-[72px] left-0 right-0 bg-gradient-to-b from-black/95 to-black/80 border-b border-gray-800 transform transition-all duration-500 ease-out shadow-xl"
       >
         <div className="container mx-auto px-4 py-6">
@@ -93,7 +116,7 @@ export const SearchOverlay: React.FC<SearchOverlayProps> = ({
                 value={localSearchTerm}
                 onChange={handleLocalChange}
                 onSearch={handleSearch}
-                placeholder="Buscar em Rocket.com"
+                placeholder="Search rocket.com"
                 className="w-full"
               />
               <Button
@@ -109,7 +132,7 @@ export const SearchOverlay: React.FC<SearchOverlayProps> = ({
             {/* Links rápidos */}
             <div className="mt-4 text-left">
               <Typography variant="p" size="sm" className="text-gray-400 mb-2 pl-1">
-                Links Rápidos
+                Quick Links
               </Typography>
               <ul className="space-y-2">
                 {CATEGORIES.slice(0, 5).map((category) => (

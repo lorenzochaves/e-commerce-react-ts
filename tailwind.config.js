@@ -10,7 +10,19 @@ module.exports = {
         "2xl": "1400px",
       },
     },
+    fontFamily: {
+      sans: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+    },
     extend: {
+      letterSpacing: {
+        'tightest': '-0.075em',
+        'tighter': '-0.05em',
+        'tight': '-0.025em',
+        'tech': '-0.02em',
+        'wide': '0.025em',
+        'wider': '0.05em',
+        'widest': '0.1em',
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

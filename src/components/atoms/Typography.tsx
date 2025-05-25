@@ -49,6 +49,16 @@ export const Typography: React.FC<TypographyProps> = ({
     white: "text-white",
     gray: "text-gray-300",
   }
+  
+  // Aplicar classes tech para headings
+  let techClass = '';
+  if (variant === 'h1') {
+    techClass = 'tech-title';
+  } else if (variant === 'h2' || variant === 'h3') {
+    techClass = 'tech-subtitle';
+  } else if (variant === 'p' || variant === 'span') {
+    techClass = 'tech-text';
+  }
 
-  return <Component className={cn(sizes[size], weights[weight], colors[color], className)}>{children}</Component>
+  return <Component className={cn(sizes[size], weights[weight], colors[color], techClass, className)}>{children}</Component>
 }

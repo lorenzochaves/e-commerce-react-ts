@@ -2,7 +2,7 @@
 
 import type React from "react"
 import { useState, useEffect } from "react"
-import { useParams } from "react-router-dom"
+import { useParams, useNavigate } from "react-router-dom"
 import { ArrowLeft } from "lucide-react"
 import { Link } from "react-router-dom"
 import { MainLayout } from "@/components/templates/MainLayout"
@@ -63,17 +63,24 @@ const ProductDetailPage: React.FC = () => {
     }, 500)
   }
 
+  const navigate = useNavigate()
+  
   const handleCategoryClick = (category: string) => {
-    // Navigate to home with category filter
-    window.location.href = `/?category=${category}`
+    // Navigate to home with category filter using react-router
+    navigate(`/?category=${encodeURIComponent(category)}`)
+    scrollToTop()
+  }
+  
+  const goToHomepage = () => {
+    // Navegar para a página inicial sem parâmetros de busca ou categoria
+    navigate('/', { replace: true })
   }
 
   const header = (
     <Header
-      searchTerm=""
-      onSearchChange={() => {}}
-      onLogoClick={scrollToTop}
+      onLogoClick={goToHomepage}
       onProfileClick={() => setShowProfile(true)}
+      onCategoryClick={handleCategoryClick}
     />
   )
 

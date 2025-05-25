@@ -12,7 +12,7 @@ interface CategoriesGridProps {
 export const CategoriesGrid: React.FC<CategoriesGridProps> = ({ onCategoryClick }) => {
   return (
     <section className="container mx-auto px-4 py-16">
-      <Typography variant="h2" size="3xl" weight="bold" className="mb-12 text-center animate-fade-in-up">
+      <Typography variant="h2" size="3xl" weight="semibold" className="mb-12 text-center animate-fade-in-up tech-subtitle">
         Shop by Category
       </Typography>
 

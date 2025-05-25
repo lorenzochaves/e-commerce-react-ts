@@ -15,6 +15,7 @@ import { CartItemCard } from "@/components/molecules/CartItemCard"
 import { OrderSummary } from "@/components/molecules/OrderSummary"
 import { EmptyCart } from "@/components/molecules/EmptyCart"
 import { useCart } from "@/context/cart-context"
+import { useSearch } from "@/context/search-context"
 import { scrollToTop } from "@/lib/utils"
 
 const CartPage: React.FC = () => {
@@ -31,16 +32,26 @@ const CartPage: React.FC = () => {
     navigate("/checkout")
   }
 
+  const { setSearchTerm } = useSearch()
+
   const handleCategoryClick = (category: string) => {
-    navigate(`/?category=${category}`)
+    // Reset search term when navigating to a category
+    setSearchTerm("")
+    navigate(`/?category=${encodeURIComponent(category)}`)
+    scrollToTop()
+  }
+  
+  const goToHomepage = () => {
+    // Limpar termo de busca e redirecionar para a página inicial sem parâmetros
+    setSearchTerm("")
+    navigate('/', { replace: true })
   }
 
   const header = (
     <Header
-      searchTerm=""
-      onSearchChange={() => {}}
-      onLogoClick={scrollToTop}
+      onLogoClick={goToHomepage}
       onProfileClick={() => setShowProfile(true)}
+      onCategoryClick={handleCategoryClick}
     />
   )
 

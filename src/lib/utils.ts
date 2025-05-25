@@ -19,7 +19,17 @@ export const generateId = (): string => {
 }
 
 export const scrollToTop = (): void => {
-  window.scrollTo({ top: 0, behavior: "smooth" })
+  // Desabilitar scroll suave temporariamente para forçar scroll imediato
+  const htmlElement = document.documentElement
+  const originalScrollBehavior = htmlElement.style.scrollBehavior
+  
+  htmlElement.style.scrollBehavior = 'auto'
+  window.scrollTo(0, 0)
+  
+  // Restaurar scroll suave após um pequeno delay
+  setTimeout(() => {
+    htmlElement.style.scrollBehavior = originalScrollBehavior || 'smooth'
+  }, 100)
 }
 
 export const scrollToElement = (elementId: string): void => {

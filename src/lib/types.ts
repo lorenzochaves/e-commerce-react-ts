@@ -53,16 +53,6 @@ export interface Category {
   color: string
 }
 
-export interface HeroSlide {
-  title: string
-  subtitle: string
-  description: string
-  cta: string
-  gradient: string
-  badge: string
-  action: string
-}
-
 export interface Feature {
   icon: React.ComponentType<{ className?: string }>
   title: string

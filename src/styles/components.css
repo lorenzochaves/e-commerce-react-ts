@@ -1,0 +1,419 @@
+/* Consolidated component styles organized by Tailwind layers */
+
+@layer base {
+  /* Base font settings */
+  body {
+    font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11'; /* Enhanced legibility features */
+  }
+
+  /* Headings with tech feel */
+  h1, h2, h3, h4, h5, h6 {
+    letter-spacing: -0.02em;
+  }
+
+  h1 {
+    font-weight: 600;
+    letter-spacing: -0.03em;
+  }
+
+  h2 {
+    font-weight: 500;
+    letter-spacing: -0.025em;
+  }
+
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #1f2937;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #6b7280;
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #9ca3af;
+  }
+}
+
+@layer components {
+  /* Typography Components */
+  .tech-title {
+    font-weight: 300;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+  }
+    
+  .tech-subtitle {
+    font-weight: 400;
+    letter-spacing: -0.02em;
+  }
+    
+  .tech-text {
+    line-height: 1.6;
+    font-weight: 400;
+  }
+
+  .tech-text-light {
+    font-weight: 300;
+  }
+
+  .button-text {
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+
+  /* Grid Components */
+  .product-grid {
+    display: grid;
+    align-items: stretch; /* Força todos os items a terem a mesma altura */
+  }
+
+  .product-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 420px; /* Altura mínima consistente */
+  }
+
+  /* Responsividade para mobile */
+  @media (max-width: 640px) {
+    .product-card {
+      min-height: 380px;
+    }
+  }
+
+  /* Responsividade para tablet */
+  @media (min-width: 641px) and (max-width: 1024px) {
+    .product-card {
+      min-height: 400px;
+    }
+  }
+
+  /* Product card content areas */
+  .product-card-content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  .product-card-text {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .product-card-actions {
+    margin-top: auto;
+    flex-shrink: 0;
+  }
+
+  /* Product image container */
+  .product-image-container {
+    position: relative;
+    width: 100%;
+    height: 192px; /* h-48 = 12rem = 192px */
+    overflow: hidden;
+  }
+
+  .product-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.3s ease;
+  }
+
+  .product-image:hover {
+    transform: scale(1.05);
+  }
+
+  /* Product Grid Header */
+  .product-grid-header {
+    position: relative;
+    z-index: 10;
+    background: rgba(17, 24, 39, 0.8);
+    backdrop-filter: blur(8px);
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .product-grid-actions {
+    position: relative;
+    z-index: 20;
+  }
+
+  /* Text gradient fix with subtle visibility enhancement */
+  .text-gradient-fix {
+    position: relative;
+    z-index: 50;
+    background: linear-gradient(45deg, #60a5fa, #a855f7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: inline-block;
+    text-shadow: 0 0 30px rgba(168, 85, 247, 0.5);
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.2));
+  }
+
+  /* Ensure text contrast with background overlay */
+  .text-gradient-fix::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
+    z-index: -1;
+    border-radius: 8px;
+  }
+
+  /* Desktop specific - only reduce overlay, keep text effect subtle */
+  @media (min-width: 1024px) {
+    .text-gradient-fix::before {
+      background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.12) 0%, transparent 70%);
+    }
+  }
+
+  /* Hero overlay layers */
+  .hero-overlay-base {
+    z-index: 10;
+  }
+
+  .hero-overlay-gradient {
+    z-index: 15;
+  }
+
+  .hero-content {
+    z-index: 30;
+  }
+
+  .hero-text {
+    z-index: 30;
+    position: relative;
+  }
+
+  /* Desktop overlay adjustments for better text visibility */
+  @media (min-width: 1024px) {
+    .hero-overlay-base {
+      background: rgba(0, 0, 0, 0.2) !important;
+    }
+    
+    .hero-overlay-gradient {
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.05), transparent, rgba(0, 0, 0, 0.1)) !important;
+    }
+  }
+
+  /* Interactive Components */
+  .hover-lift {
+    transition: all 0.3s ease;
+  }
+
+  .hover-lift:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  }
+
+  .gradient-text {
+    background: linear-gradient(-45deg, #8b5cf6, #06b6d4, #10b981, #f59e0b);
+    background-size: 400% 400%;
+    animation: gradient-shift 3s ease infinite;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Text clamp utilities */
+  .line-clamp-1 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+  }
+
+  .line-clamp-2 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+  }
+
+  /* Scrollbar styling */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: #1f2937;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #6b7280;
+    border-radius: 4px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #9ca3af;
+  }
+}
+
+@layer utilities {
+  /* Custom Animations */
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slide-in-left {
+    from {
+      opacity: 0;
+      transform: translateX(-30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes slide-in-right {
+    from {
+      opacity: 0;
+      transform: translateX(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes scale-in {
+    from {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes progress-bar {
+    from {
+      width: 100%;
+    }
+    to {
+      width: 0%;
+    }
+  }
+
+  @keyframes gradient-shift {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  @keyframes pulse-glow {
+    from {
+      box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
+    }
+    to {
+      box-shadow: 0 0 30px rgba(139, 92, 246, 0.6);
+    }
+  }
+
+  @keyframes toast-slide-in {
+    from {
+      opacity: 0;
+      transform: translateX(100%);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes toast-slide-out {
+    from {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateX(100%);
+    }
+  }
+
+  /* Animation utilities */
+  .animate-fade-in-up {
+    animation: fade-in-up 0.8s ease-out forwards;
+  }
+
+  .animate-slide-in-left {
+    animation: slide-in-left 0.6s ease-out forwards;
+  }
+
+  .animate-slide-in-right {
+    animation: slide-in-right 0.6s ease-out forwards;
+  }
+
+  .animate-scale-in {
+    animation: scale-in 0.5s ease-out forwards;
+  }
+
+  .animate-progress-bar {
+    animation: progress-bar 3s linear forwards;
+  }
+
+  .float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite alternate;
+  }
+
+  /* Toast animations */
+  .toast-enter {
+    animation: toast-slide-in 0.3s ease-out forwards;
+  }
+
+  .toast-exit {
+    animation: toast-slide-out 0.3s ease-in forwards;
+  }
+}

@@ -24,6 +24,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
   // Removemos o estado local para evitar duplicação do estado
   
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Apenas atualiza o valor do input localmente, sem acionar a busca
     onChange(e.target.value)
   }
 

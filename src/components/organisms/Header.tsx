@@ -11,18 +11,18 @@ import { SearchOverlay } from "@/components/organisms/SearchOverlay"
 import { Icon } from "@/components/atoms/Icon"
 import { useCart } from "@/context/cart-context"
 import { useUser } from "@/context/user-context"
+import { useSearch } from "@/context/search-context"
 
 interface HeaderProps {
-  searchTerm: string
-  onSearchChange: (value: string) => void
   onLogoClick: () => void
   onProfileClick: () => void
   onCategoryClick: (category: string) => void
 }
 
-export const Header: React.FC<HeaderProps> = ({ searchTerm, onSearchChange, onLogoClick, onProfileClick, onCategoryClick }) => {
+export const Header: React.FC<HeaderProps> = ({ onLogoClick, onProfileClick, onCategoryClick }) => {
   const { cart } = useCart()
   const { user } = useUser()
+  const { searchTerm, handleSearch } = useSearch()
   const [isSearchOpen, setIsSearchOpen] = useState(false)
 
   const totalItems = cart.reduce((total, item) => total + item.quantity, 0)
@@ -33,6 +33,15 @@ export const Header: React.FC<HeaderProps> = ({ searchTerm, onSearchChange, onLo
 
   const handleSearchClose = () => {
     setIsSearchOpen(false)
+  }
+
+  // Função para toggle do search (abrir/fechar)
+  const handleSearchToggle = () => {
+    if (isSearchOpen) {
+      handleSearchClose()
+    } else {
+      handleSearchOpen()
+    }
   }
 
   return (
@@ -47,13 +56,16 @@ export const Header: React.FC<HeaderProps> = ({ searchTerm, onSearchChange, onLo
                 color="text-purple-500"
                 className="group-hover:rotate-12 transition-transform duration-300"
               />
-              <span className="text-2xl font-bold tracking-tighter bg-gradient-to-r from-purple-500 to-cyan-500 bg-clip-text text-transparent">
+              <span className="text-2xl font-semibold tracking-tighter bg-gradient-to-r from-purple-500 to-cyan-500 bg-clip-text text-transparent button-text">
                 ROCKET
               </span>
             </Link>
 
             <div className="flex items-center gap-4">
-              <SearchButton onClick={handleSearchOpen} />
+              <SearchButton 
+                onClick={handleSearchToggle} 
+                isActive={searchTerm !== ""} 
+              />
               {user && <UserProfileButton onClick={onProfileClick} />}
               <CartButton itemCount={totalItems} />
             </div>
@@ -65,7 +77,8 @@ export const Header: React.FC<HeaderProps> = ({ searchTerm, onSearchChange, onLo
         isOpen={isSearchOpen}
         onClose={handleSearchClose}
         searchTerm={searchTerm}
-        onSearchChange={onSearchChange}
+        onSearchChange={() => {}} // Função vazia já que não usamos mais
+        onSearch={handleSearch}
         onCategoryClick={onCategoryClick}
       />
     </>

@@ -49,20 +49,20 @@ export const Footer: React.FC<FooterProps> = ({ onCategoryClick }) => {
               <Typography
                 variant="span"
                 size="xl"
-                weight="bold"
-                className="bg-gradient-to-r from-purple-500 to-cyan-500 bg-clip-text text-transparent"
+                weight="semibold"
+                className="bg-gradient-to-r from-purple-500 to-cyan-500 bg-clip-text text-transparent button-text tracking-tight"
               >
                 ROCKET
               </Typography>
             </div>
-            <Typography variant="p" color="muted" size="sm">
+            <Typography variant="p" color="muted" size="sm" className="tech-text">
               The future of shopping is here. Discover revolutionary products that will transform your world.
             </Typography>
           </div>
 
           {footerSections.map((section, index) => (
             <div key={section.title} className="animate-fade-in-up" style={{ animationDelay: `${(index + 1) * 0.1}s` }}>
-              <Typography variant="h3" weight="semibold" className="mb-4">
+              <Typography variant="h3" weight="medium" className="mb-4 tech-subtitle">
                 {section.title}
               </Typography>
               <ul className="space-y-2">
@@ -70,7 +70,7 @@ export const Footer: React.FC<FooterProps> = ({ onCategoryClick }) => {
                   <li key={link.label}>
                     <button
                       onClick={link.action}
-                      className="text-sm text-gray-400 hover:text-white transition-all duration-300 hover:translate-x-1 text-left"
+                      className="text-sm text-gray-400 hover:text-white transition-all duration-300 hover:translate-x-1 text-left tech-text"
                     >
                       {link.label}
                     </button>

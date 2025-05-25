@@ -15,6 +15,7 @@ import { OrderSummary } from "@/components/molecules/OrderSummary"
 import { OrderComplete } from "@/components/molecules/OrderComplete"
 import { useCart } from "@/context/cart-context"
 import { useUser } from "@/context/user-context"
+import { useSearch } from "@/context/search-context"
 import { scrollToTop } from "@/lib/utils"
 
 const CheckoutPage: React.FC = () => {
@@ -46,16 +47,26 @@ const CheckoutPage: React.FC = () => {
     }, 2000)
   }
 
+  const { setSearchTerm } = useSearch()
+
   const handleCategoryClick = (category: string) => {
-    navigate(`/?category=${category}`)
+    // Reset search term when navigating to a category
+    setSearchTerm("")
+    navigate(`/?category=${encodeURIComponent(category)}`)
+    scrollToTop()
+  }
+  
+  const goToHomepage = () => {
+    // Limpar termo de busca e redirecionar para a página inicial sem parâmetros
+    setSearchTerm("")
+    navigate('/', { replace: true })
   }
 
   const header = (
     <Header
-      searchTerm=""
-      onSearchChange={() => {}}
-      onLogoClick={scrollToTop}
+      onLogoClick={goToHomepage}
       onProfileClick={() => setShowProfile(true)}
+      onCategoryClick={handleCategoryClick}
     />
   )
 

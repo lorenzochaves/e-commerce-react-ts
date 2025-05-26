@@ -5,7 +5,7 @@ import { formatPrice } from "@/lib/utils"
 interface PriceDisplayProps {
   price: number
   originalPrice?: number
-  size?: "sm" | "md" | "lg" | "xl" | "2xl"
+  size?: "sm" | "md" | "lg"
   showCurrency?: boolean
 }
 
@@ -19,15 +19,25 @@ export const PriceDisplay: React.FC<PriceDisplayProps> = ({
     sm: { current: "lg", original: "sm" },
     md: { current: "xl", original: "md" },
     lg: { current: "2xl", original: "lg" },
-  }
+  } as const // 🆕 Adicionar 'as const'
 
   return (
     <div className="flex items-center gap-2">
-      <Typography variant="span" size={sizes[size].current as any} weight="bold" color="primary">
+      <Typography 
+        variant="span" 
+        size={sizes[size].current} // 🆕 Remover 'as any'
+        weight="bold" 
+        color="primary"
+      >
         {showCurrency ? formatPrice(price) : price.toFixed(2)}
       </Typography>
       {originalPrice && originalPrice > price && (
-        <Typography variant="span" size={sizes[size].original as any} color="muted" className="line-through">
+        <Typography 
+          variant="span" 
+          size={sizes[size].original} // 🆕 Remover 'as any'
+          color="muted" 
+          className="line-through"
+        >
           {showCurrency ? formatPrice(originalPrice) : originalPrice.toFixed(2)}
         </Typography>
       )}

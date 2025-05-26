@@ -1,7 +1,5 @@
-"use client"
-
 import { KeyboardEvent } from "react"
-import { Search, X } from "lucide-react"
+import { Search } from "lucide-react"
 import { Input } from "@/components/atoms/Input"
 import { Icon } from "@/components/atoms/Icon"
 import { Button } from "@/components/atoms/Button"

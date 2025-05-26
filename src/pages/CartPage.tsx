@@ -32,7 +32,7 @@ const CartPage: React.FC = () => {
     navigate("/checkout")
   }
 
-  const { setSearchTerm } = useSearch()
+  const { setSearchTerm, resetSearch } = useSearch()
 
   const handleCategoryClick = (category: string) => {
     // Reset search term when navigating to a category
@@ -42,9 +42,9 @@ const CartPage: React.FC = () => {
   }
   
   const goToHomepage = () => {
-    // Limpar termo de busca e redirecionar para a página inicial sem parâmetros
-    setSearchTerm("")
-    navigate('/', { replace: true })
+    // Usar a função centralizada para resetar busca e voltar para home
+    resetSearch()
+    scrollToTop()
   }
 
   const header = (
@@ -101,7 +101,7 @@ const CartPage: React.FC = () => {
                 <Button variant="outline" onClick={() => clearCart()} className="flex-1">
                   Clear Cart
                 </Button>
-                <Button variant="secondary" onClick={() => navigate("/")} className="flex-1">
+                <Button variant="secondary" onClick={goToHomepage} className="flex-1">
                   Continue Shopping
                 </Button>
               </div>

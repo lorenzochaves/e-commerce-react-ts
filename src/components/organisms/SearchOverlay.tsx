@@ -1,5 +1,3 @@
-"use client"
-
 import React, { useEffect, useRef } from "react"
 import { X, ArrowRight } from "lucide-react"
 import { Icon } from "@/components/atoms/Icon"
@@ -30,8 +28,7 @@ export const SearchOverlay: React.FC<SearchOverlayProps> = ({
   // Função para lidar com a busca quando o usuário confirmar (pressionar Enter ou clicar no ícone)
   const handleSearch = (value: string) => {
     if (value.trim()) {
-      onSearch(value) // Usa a função onSearch do contexto
-      
+      onSearch(value) 
       // Fechar o overlay após a busca
       setTimeout(() => onClose(), 100)
     }

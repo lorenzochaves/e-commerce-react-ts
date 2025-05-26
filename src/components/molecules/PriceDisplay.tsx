@@ -5,7 +5,7 @@ import { formatPrice } from "@/lib/utils"
 interface PriceDisplayProps {
   price: number
   originalPrice?: number
-  size?: "sm" | "md" | "lg"
+  size?: "sm" | "md" | "lg" | "xl" | "2xl"
   showCurrency?: boolean
 }
 

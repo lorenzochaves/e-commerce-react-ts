@@ -1,31 +1,49 @@
 import type React from "react"
-import { ShoppingCart } from "lucide-react"
-import { Link } from "react-router-dom"
+import { ShoppingCart, ArrowRight } from "lucide-react"
 import { Button } from "@/components/atoms/Button"
 import { Typography } from "@/components/atoms/Typography"
 import { Icon } from "@/components/atoms/Icon"
+import { useSearch } from "@/context/search-context"
+import { scrollToTop } from "@/lib/utils"
 
 export const EmptyCart: React.FC = () => {
+  const { resetSearch } = useSearch()
+
+  const goToHomepage = () => {
+    resetSearch()
+    scrollToTop()
+  }
+
   return (
     <div className="text-center py-12 animate-fade-in-up">
-      <div className="w-24 h-24 bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-6">
-        <Icon icon={ShoppingCart} size="xl" color="text-gray-600" />
+      {/* Icon Container */}
+      <div className="w-24 h-24 bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-gray-700 transition-colors">
+        <Icon 
+          icon={ShoppingCart} 
+          size="xl" 
+          className="text-gray-600 group-hover:text-gray-500 transition-colors" // 🆕 Corrigido
+        />
       </div>
 
-      <Typography variant="h2" size="2xl" weight="semibold" className="mb-4">
+      {/* Title */}
+      <Typography variant="h2" size="2xl" weight="semibold" className="mb-4 tech-title">
         Your cart is empty
       </Typography>
 
-      <Typography variant="p" color="muted" className="mb-8 max-w-md mx-auto">
+      {/* Description */}
+      <Typography variant="p" color="muted" className="mb-8 max-w-md mx-auto tech-text">
         Looks like you haven't added any products to your cart yet. Start exploring our futuristic collection!
       </Typography>
 
-      <Link to="/">
-        <Button size="lg" className="group">
-          Continue Shopping
-          <Icon icon={ShoppingCart} size="sm" className="group-hover:animate-bounce" />
-        </Button>
-      </Link>
+      {/* CTA Button */}
+      <Button size="lg" className="group" onClick={goToHomepage}>
+        Continue Shopping
+        <Icon 
+          icon={ArrowRight} 
+          size="sm" 
+          className="ml-2 group-hover:translate-x-1 transition-transform" // 🆕 Animação diferente
+        />
+      </Button>
     </div>
   )
 }

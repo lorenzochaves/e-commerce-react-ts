@@ -1,5 +1,3 @@
-"use client"
-
 import type React from "react"
 import { Typography } from "@/components/atoms/Typography"
 import { CategoryCard } from "@/components/molecules/CategoryCard"
@@ -24,8 +22,6 @@ export const CategoriesGrid: React.FC<CategoriesGridProps> = ({ onCategoryClick 
             name={category.name}
             description={category.description}
             icon={category.icon}
-            gradient={category.gradient}
-            color={category.color}
             onClick={onCategoryClick}
             index={index}
           />

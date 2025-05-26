@@ -17,11 +17,11 @@ export const CartButton: React.FC<CartButtonProps> = ({ itemCount }) => {
         {itemCount > 0 && (
           <Badge
             variant="primary"
-            size="sm"
-            animate
-            className="absolute -top-2 -right-2 h-5 w-5 p-0 flex items-center justify-center"
+            size="xs"
+            animate="pulse"
+            className="absolute -top-2 -right-2 min-w-[20px] h-5 px-1.5 py-0 flex items-center justify-center text-xs font-bold"
           >
-            {itemCount}
+            {itemCount > 99 ? '99+' : itemCount}
           </Badge>
         )}
       </Button>

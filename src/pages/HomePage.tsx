@@ -1,7 +1,7 @@
 "use client"
 
 import type React from "react"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback, useMemo } from "react"
 import { useLocation, useSearchParams, useNavigate } from "react-router-dom"
 import { MainLayout } from "@/components/templates/MainLayout"
 import { Header } from "@/components/organisms/Header"
@@ -15,12 +15,9 @@ import { NewsletterSection } from "@/components/organisms/NewsletterSection"
 import { Footer } from "@/components/organisms/Footer"
 import { UserProfile } from "@/components/organisms/UserProfile"
 import { FadeIn } from "@/components/atoms/FadeIn"
-import { useSearch } from "@/context/search-context"
-
 import { Button } from "@/components/atoms/Button"
-import { Spinner } from "@/components/atoms/Spinner"
-import { Typography } from "@/components/atoms/Typography"
-import { Icon } from "@/components/atoms/Icon"
+import { LoadingScreen } from "@/components/molecules/LoadingScreen" // Separar loading
+import { useSearch } from "@/context/search-context"
 import { getProducts } from "@/lib/api"
 import { useProductFilters } from "@/hooks/useProductFilters"
 import { scrollToTop } from "@/lib/utils"
@@ -37,8 +34,7 @@ const HomePage: React.FC = () => {
   const [showProfile, setShowProfile] = useState(false)
   const [isVisible, setIsVisible] = useState(false)
 
-  // Obter o termo de busca global e a função para atualizá-lo
-  const { searchTerm: globalSearchTerm, setSearchTerm: setGlobalSearchTerm } = useSearch()
+  const { resetSearch } = useSearch()
   
   const {
     searchTerm,
@@ -51,64 +47,41 @@ const HomePage: React.FC = () => {
     setActiveSection,
     getCurrentProducts,
     isFiltered,
-    // featuredProducts,
-    // bestSellers,
-    // newArrivals,
   } = useProductFilters(products)
 
-  useEffect(() => {
-    loadProducts()
-    setIsVisible(true)
-    
-    // Verificar parâmetros de URL no carregamento
-    const searchTermFromUrl = searchParams.get('search')
-    const categoryFromUrl = searchParams.get('category')
-    
-    if (searchTermFromUrl) {
-      // Definir o termo de busca local
-      setSearchTerm(searchTermFromUrl)
-      setSelectedCategory("")
-      setShowAllProducts(false)
-      
-      // Não atualizamos setGlobalSearchTerm aqui para evitar atualizações circulares
-    } else if (categoryFromUrl) {
-      // Definir a categoria
-      setSelectedCategory(categoryFromUrl)
-      setSearchTerm("")
-      setShowAllProducts(false)
+  // Memoizar funções pesadas
+  const getCurrentTitle = useCallback(() => {
+    if (showAllProducts) return "All Products"
+    if (selectedCategory) {
+      const category = CATEGORIES.find((c) => c.id === selectedCategory)
+      return `${category?.name} Products`
     }
-  }, [])
+    if (searchTerm) return "Search Results"
 
-  // Verificar se os parâmetros de URL mudaram (para navegação entre páginas)
-  useEffect(() => {
-    const searchTermFromUrl = searchParams.get('search')
-    const categoryFromUrl = searchParams.get('category')
-    
-    if (searchTermFromUrl) {
-      // Apenas atualiza o estado local
-      setSearchTerm(searchTermFromUrl)
-      setSelectedCategory("")
-      setShowAllProducts(false)
-    } else if (categoryFromUrl) {
-      setSelectedCategory(categoryFromUrl)
-      setSearchTerm("")
-      setShowAllProducts(false)
+    switch (activeSection) {
+      case "bestsellers": return "Best Sellers"
+      case "newarrivals": return "New Arrivals"
+      default: return "Featured Products"
     }
-  }, [location.search])
+  }, [showAllProducts, selectedCategory, searchTerm, activeSection])
 
-  // Sincronizar o estado local com o estado global de busca apenas quando o termo de busca global mudar
-  useEffect(() => {
-    if (globalSearchTerm && globalSearchTerm !== searchTerm) {
-      setSearchTerm(globalSearchTerm)
-      setSelectedCategory("")
-      setShowAllProducts(false)
+  const getCurrentDescription = useCallback(() => {
+    if (showAllProducts) return `Browse all ${products.length} products in our collection`
+    if (selectedCategory) {
+      const category = CATEGORIES.find((c) => c.id === selectedCategory)
+      return `Explore our ${category?.description.toLowerCase()}`
     }
-  }, [globalSearchTerm])
+    if (searchTerm) return `${getCurrentProducts().length} products found`
 
-  // Não atualizamos mais o estado global quando o estado local muda
-  // Isso evita atualizações circulares e feedback enquanto o usuário digita
+    switch (activeSection) {
+      case "bestsellers": return "Most popular products this month"
+      case "newarrivals": return "Latest additions to our futuristic collection"
+      default: return "Hand-picked products that define the future"
+    }
+  }, [showAllProducts, selectedCategory, searchTerm, activeSection, products.length, getCurrentProducts])
 
-  const loadProducts = async () => {
+  // Carregar produtos apenas uma vez
+  const loadProducts = useCallback(async () => {
     try {
       const productsData = await getProducts()
       setProducts(productsData)
@@ -117,140 +90,109 @@ const HomePage: React.FC = () => {
     } finally {
       setLoading(false)
     }
-  }
+  }, [])
 
-  const handleCategoryClick = (category: string) => {
+  // Handlers memoizados
+  const handleCategoryClick = useCallback((category: string) => {
     setSelectedCategory(category)
     setSearchTerm("")
     setShowAllProducts(false)
-    // Atualizar a URL com o parâmetro de categoria
     navigate(`/?category=${encodeURIComponent(category)}`)
-    // Garantir que o scroll aconteça após a atualização da UI
-    setTimeout(() => {
-      scrollToTop()
-    }, 150)
-  }
+    setTimeout(scrollToTop, 150)
+  }, [navigate, setSelectedCategory, setSearchTerm, setShowAllProducts])
 
-  const handleViewAll = () => {
+  const handleViewAll = useCallback(() => {
     setShowAllProducts(true)
     setSelectedCategory("")
     setSearchTerm("")
-    // Limpar parâmetros da URL
     navigate('/')
     scrollToTop()
-  }
+  }, [navigate, setShowAllProducts, setSelectedCategory, setSearchTerm])
 
-  const goBackHome = () => {
+  const goBackHome = useCallback(() => {
+    resetSearch()
     setSelectedCategory("")
     setSearchTerm("")
-    setGlobalSearchTerm("") // Importante: limpar também o termo de busca global
     setShowAllProducts(false)
     setActiveSection("featured")
-    // Limpar parâmetros da URL
-    navigate('/', { replace: true }) // Usar replace para evitar pilha de navegação
-    scrollToTop()
-  }
+  }, [resetSearch, setSelectedCategory, setSearchTerm, setShowAllProducts, setActiveSection])
 
-  const getCurrentTitle = () => {
-    if (showAllProducts) return "All Products"
-    if (selectedCategory) return `${CATEGORIES.find((c) => c.id === selectedCategory)?.name} Products`
-    if (searchTerm) return "Search Results"
+  // Effect para carregar dados iniciais
+  useEffect(() => {
+    loadProducts()
+    setIsVisible(true)
+  }, [loadProducts])
 
-    switch (activeSection) {
-      case "bestsellers":
-        return "Best Sellers"
-      case "newarrivals":
-        return "New Arrivals"
-      default:
-        return "Featured Products"
+  // Effect para parâmetros de URL
+  useEffect(() => {
+    const searchTermFromUrl = searchParams.get('search')
+    const categoryFromUrl = searchParams.get('category')
+    
+    if (searchTermFromUrl) {
+      setSearchTerm(searchTermFromUrl)
+      setSelectedCategory("")
+      setShowAllProducts(false)
+    } else if (categoryFromUrl) {
+      setSelectedCategory(categoryFromUrl)
+      setSearchTerm("")
+      setShowAllProducts(false)
     }
-  }
+  }, [location.search, setSearchTerm, setSelectedCategory, setShowAllProducts])
 
-  const getCurrentDescription = () => {
-    if (showAllProducts) return `Browse all ${products.length} products in our collection`
-    if (selectedCategory)
-      return `Explore our ${CATEGORIES.find((c) => c.id === selectedCategory)?.description.toLowerCase()}`
-    if (searchTerm) return `${getCurrentProducts().length} products found`
-
-    switch (activeSection) {
-      case "bestsellers":
-        return "Most popular products this month"
-      case "newarrivals":
-        return "Latest additions to our futuristic collection"
-      default:
-        return "Hand-picked products that define the future"
-    }
-  }
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-black text-white flex items-center justify-center">
-        <div className="text-center">
-          <div className="relative mb-4">
-            <Icon icon={() => <div>🚀</div>} size="xl" className="mx-auto animate-bounce" />
-            <Spinner size="lg" className="absolute inset-0 mx-auto" />
-          </div>
-          <Typography variant="p" size="xl" weight="semibold" className="animate-pulse">
-            Loading the future...
-          </Typography>
-          <div className="flex justify-center mt-4 space-x-1">
-            <div className="w-2 h-2 bg-purple-500 rounded-full animate-bounce"></div>
-            <div className="w-2 h-2 bg-purple-500 rounded-full animate-bounce" style={{ animationDelay: "0.1s" }}></div>
-            <div className="w-2 h-2 bg-purple-500 rounded-full animate-bounce" style={{ animationDelay: "0.2s" }}></div>
-          </div>
-        </div>
-      </div>
-    )
-  }
-
-  const header = (
+  // Memoizar componentes pesados
+  const memoizedHeader = useMemo(() => (
     <Header
       onLogoClick={goBackHome}
       onProfileClick={() => setShowProfile(true)}
       onCategoryClick={handleCategoryClick}
     />
-  )
+  ), [goBackHome, handleCategoryClick])
 
-  const footer = <Footer onCategoryClick={handleCategoryClick} />
+  const memoizedFooter = useMemo(() => (
+    <Footer onCategoryClick={handleCategoryClick} />
+  ), [handleCategoryClick])
 
-  const notifications = <CartNotifications />
+  const backToHomeButton = useMemo(() => (
+    isFiltered ? (
+      <Button 
+        variant="outline" 
+        onClick={goBackHome}
+        className="bg-gray-900/50 backdrop-blur-sm border-purple-500/50 text-purple-400 hover:bg-purple-500/20 hover:border-purple-400 transition-all duration-300 whitespace-nowrap"
+      >
+        Back to Home
+      </Button>
+    ) : undefined
+  ), [isFiltered, goBackHome])
 
-  const modals = <UserProfile isOpen={showProfile} onClose={() => setShowProfile(false)} />
+  if (loading) {
+    return <LoadingScreen />
+  }
 
   return (
-    <MainLayout header={header} footer={footer} notifications={notifications} modals={modals}>
-      <div
-        className={`transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
-      >
-        {/* Hero Section */}
+    <MainLayout 
+      header={memoizedHeader} 
+      footer={memoizedFooter} 
+      notifications={<CartNotifications />} 
+      modals={<UserProfile isOpen={showProfile} onClose={() => setShowProfile(false)} />}
+    >
+      <div className={`transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
         {!isFiltered && (
-          <FadeIn direction="up" duration={1000}>
-            <HeroVideo />
-          </FadeIn>
+          <>
+            <FadeIn direction="up" duration={1000}>
+              <HeroVideo />
+            </FadeIn>
+            <FadeIn direction="up" duration={800} delay={200}>
+              <FeaturesSection />
+            </FadeIn>
+            <FadeIn direction="up" duration={800} delay={300}>
+              <CategoriesGrid onCategoryClick={handleCategoryClick} />
+            </FadeIn>
+            <FadeIn direction="up" duration={800} delay={400}>
+              <ProductTabs activeSection={activeSection} onSectionChange={setActiveSection} />
+            </FadeIn>
+          </>
         )}
 
-        {/* Features Section */}
-        {!isFiltered && (
-          <FadeIn direction="up" duration={800} delay={200}>
-            <FeaturesSection />
-          </FadeIn>
-        )}
-
-        {/* Categories Section */}
-        {!isFiltered && (
-          <FadeIn direction="up" duration={800} delay={300}>
-            <CategoriesGrid onCategoryClick={handleCategoryClick} />
-          </FadeIn>
-        )}
-
-        {/* Product Tabs */}
-        {!isFiltered && (
-          <FadeIn direction="up" duration={800} delay={400}>
-            <ProductTabs activeSection={activeSection} onSectionChange={setActiveSection} />
-          </FadeIn>
-        )}
-
-        {/* Products Grid */}
         <FadeIn direction="up" duration={800} delay={500}>
           <ProductGrid
             title={getCurrentTitle()}
@@ -258,19 +200,10 @@ const HomePage: React.FC = () => {
             products={getCurrentProducts()}
             showViewAll={!isFiltered}
             onViewAll={handleViewAll}
-            customButton={isFiltered ? (
-              <Button 
-                variant="outline" 
-                onClick={goBackHome}
-                className="bg-gray-900/50 backdrop-blur-sm border-purple-500/50 text-purple-400 hover:bg-purple-500/20 hover:border-purple-400 transition-all duration-300 whitespace-nowrap"
-              >
-                Back to Home
-              </Button>
-            ) : undefined}
+            customButton={backToHomeButton}
           />
         </FadeIn>
 
-        {/* Newsletter Section */}
         {!isFiltered && (
           <FadeIn direction="up" duration={800} delay={600}>
             <NewsletterSection />

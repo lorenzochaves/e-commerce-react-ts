@@ -1,5 +1,3 @@
-"use client"
-
 import type React from "react"
 import { Trash2 } from "lucide-react"
 import { Link } from "react-router-dom"

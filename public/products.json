@@ -4,7 +4,7 @@
     "name": "Quantum Hover Board",
     "description": "Experience the future of personal transportation with our anti-gravity hover technology. Effortlessly glide above any surface with precision control and zero emissions. This revolutionary device uses quantum field manipulation to achieve true levitation, making it the ultimate eco-friendly transportation solution.",
     "price": 599.99,
-    "image": "/quantum.png",
+    "image": "/Images/quantum.png",
     "category": "transportation",
     "badge": "bestseller",
     "rank": 1
@@ -14,7 +14,7 @@
     "name": "Neural Interface Headset",
     "description": "Control your smart home devices with just your thoughts using advanced brain-computer interface technology. This cutting-edge headset reads neural signals and translates them into digital commands, allowing seamless interaction with your connected devices without lifting a finger.",
     "price": 349.99,
-    "image": "/neuralinterface.png",
+    "image": "/Images/neuralinterface.png",
     "category": "neural-tech"
   },
   {
@@ -22,7 +22,7 @@
     "name": "Holographic Display Watch",
     "description": "More than just a timepiece, this watch projects interactive holographic displays for communication, navigation, and entertainment on the go. Features include 3D holographic projections, gesture controls, and seamless integration with all your devices.",
     "price": 299.99,
-    "image": "/watch.png",
+    "image": "/Images/watch.png",
     "category": "wearables"
   },
   {
@@ -30,7 +30,7 @@
     "name": "Atmospheric Water Generator",
     "description": "Never worry about water supply again. This portable device extracts moisture from the air, providing clean drinking water anywhere on the planet. Uses advanced condensation technology and built-in purification systems to ensure the highest quality water.",
     "price": 199.99,
-    "image": "/water.png",
+    "image": "/Images/water.png",
     "category": "home-living"
   },
   {
@@ -38,7 +38,7 @@
     "name": "Modular Smart Clothing",
     "description": "Clothing that adapts to your environment with embedded temperature regulation, color-changing fabric, and built-in health monitoring. The fabric responds to environmental conditions and your body's needs, providing optimal comfort in any situation.",
     "price": 149.99,
-    "image": "/smartcloth.png",
+    "image": "/Images/smartcloth.png",
     "category": "wearables"
   },
   {
@@ -46,7 +46,7 @@
     "name": "Drone Companion",
     "description": "Your personal flying assistant that follows you autonomously, captures memories, and helps with daily tasks through advanced AI. Features include obstacle avoidance, 4K video recording, and intelligent task automation.",
     "price": 499.99,
-    "image": "/drone.png",
+    "image": "/Images/drone.png",
     "category": "transportation"
   },
   {
@@ -54,7 +54,7 @@
     "name": "Gravity Defying Motorcycle",
     "description": "Revolutionary motorcycle that uses magnetic levitation to hover above any surface. Equipped with quantum propulsion system, reaching speeds up to 200mph while maintaining perfect stability and zero environmental impact.",
     "price": 2499.99,
-    "image": "/moto.png",
+    "image": "/Images/moto.png",
     "category": "transportation"
   },
   {
@@ -62,7 +62,7 @@
     "name": "Teleportation Pod",
     "description": "Personal teleportation device for instant travel up to 50 miles. Uses quantum entanglement technology to safely transport you and your belongings across vast distances in mere seconds. Perfect for daily commuting.",
     "price": 4999.99,
-    "image": "/teleportpod.png",
+    "image": "/Images/teleportpod.png",
     "category": "transportation"
   },
   {
@@ -70,7 +70,7 @@
     "name": "Flying Car Capsule",
     "description": "Compact flying vehicle that transforms from ground car to aerial transport. Features autopilot AI, collision avoidance, and vertical takeoff capabilities. Seats 4 passengers comfortably with luxury interior.",
     "price": 1899.99,
-    "image": "/carfly.png",
+    "image": "/Images/carfly.png",
     "category": "transportation"
   },
   {
@@ -78,7 +78,7 @@
     "name": "Mind Reading Glasses",
     "description": "Advanced neural glasses that can interpret thoughts and emotions of people around you. Features real-time translation of mental states, mood detection, and intention prediction with 99.7% accuracy.",
     "price": 799.99,
-    "image": "/mindglasses.png",
+    "image": "/Images/mindglasses.png",
     "category": "neural-tech"
   },
   {
@@ -86,7 +86,7 @@
     "name": "Dream Recording Device",
     "description": "Capture and replay your dreams in vivid detail. This neural device records brain activity during sleep and converts it into watchable video content. Share your dreams or analyze them for insights.",
     "price": 1299.99,
-    "image": "/dreams.png",
+    "image": "/Images/dreams.png",
     "category": "neural-tech",
     "badge": "bestseller",
     "rank": 4
@@ -96,7 +96,7 @@
     "name": "Telepathic Communication Chip",
     "description": "Implantable chip that enables direct mind-to-mind communication with other chip users. Send thoughts, emotions, and even images instantly across any distance. Includes encryption for private conversations.",
     "price": 2199.99,
-    "image": "/telepatic.png",
+    "image": "/Images/telepatic.png",
     "category": "neural-tech"
   },
   {
@@ -104,7 +104,7 @@
     "name": "Memory Enhancement Headband",
     "description": "Boost your cognitive abilities with this neural enhancement device. Improves memory retention by 300%, accelerates learning speed, and enhances focus. Perfect for students and professionals.",
     "price": 899.99,
-    "image": "/memory.png",
+    "image": "/Images/memory.png",
     "category": "neural-tech"
   },
   {
@@ -112,7 +112,7 @@
     "name": "Invisibility Cloak",
     "description": "True optical invisibility using metamaterial technology. This lightweight cloak bends light around the wearer, making them completely invisible to the naked eye and most detection systems.",
     "price": 3499.99,
-    "image": "/invisibleclo.png",
+    "image": "/Images/invisibleclo.png",
     "category": "wearables",
     "badge": "bestseller",
     "rank": 3
@@ -122,7 +122,7 @@
     "name": "Shape-Shifting Suit",
     "description": "Adaptive clothing that changes style, color, and even material based on your needs. From formal business attire to athletic wear, this suit transforms instantly using programmable smart fibers.",
     "price": 1599.99,
-    "image": "/shapesift.png",
+    "image": "/Images/shapesift.png",
     "category": "wearables"
   },
   {
@@ -130,7 +130,7 @@
     "name": "Superhuman Strength Gloves",
     "description": "Exoskeleton gloves that amplify your grip strength by 1000%. Lift cars, crush steel, or perform delicate tasks with perfect precision. Powered by micro fusion cells with 30-day battery life.",
     "price": 2799.99,
-    "image": "/gloves.png",
+    "image": "/Images/gloves.png",
     "category": "wearables"
   },
   {
@@ -138,7 +138,7 @@
     "name": "Time Dilation Boots",
     "description": "Experience time differently with these quantum boots. Slow down your perception of time to react faster or speed it up to make boring tasks pass quickly. Adjustable time ratios from 0.1x to 10x.",
     "price": 4299.99,
-    "image": "/timedilation.png",
+    "image": "/Images/timedilation.png",
     "category": "wearables",
     "badge": "new"
   },
@@ -147,7 +147,7 @@
     "name": "AI Home Butler Robot",
     "description": "Fully autonomous household assistant that manages your entire home. Cooks, cleans, organizes, and even provides companionship. Features advanced AI personality and learning capabilities.",
     "price": 8999.99,
-    "image": "/airobot.png",
+    "image": "/Images/airobot.png",
     "category": "home-living",
     "badge": "bestseller",
     "rank": 2
@@ -157,7 +157,7 @@
     "name": "Holographic Room Projector",
     "description": "Transform any room into any environment with this advanced holographic system. Visit ancient Rome, walk on Mars, or relax on a tropical beach - all from your living room with full sensory immersion.",
     "price": 5499.99,
-    "image": "/holoroom.png",
+    "image": "/Images/holoroom.png",
     "category": "home-living",
     "badge": "new"
   },
@@ -166,7 +166,7 @@
     "name": "Quantum Food Synthesizer",
     "description": "Create any meal instantly from basic molecular components. This device can synthesize restaurant-quality food with perfect nutrition, taste, and texture. Includes 10,000+ recipe database.",
     "price": 3299.99,
-    "image": "/quantumFood.png",
+    "image": "/Images/quantumFood.png",
     "category": "home-living",
     "badge": "new"
   }

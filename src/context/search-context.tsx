@@ -19,12 +19,14 @@ interface SearchContextType {
   searchTerm: string
   setSearchTerm: (value: string) => void
   handleSearch: (value: string) => void
+  resetSearch: () => void
 }
 
 const SearchContext = createContext<SearchContextType>({
   searchTerm: "",
   setSearchTerm: () => {},
   handleSearch: () => {},
+  resetSearch: () => {},
 })
 
 export const SearchProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -53,8 +55,18 @@ export const SearchProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     }
   }
 
+  // Função para resetar busca e voltar para home limpa
+  const resetSearch = () => {
+    try {
+      setSearchTerm("")
+      navigate('/', { replace: true })
+    } catch (error) {
+      console.error("Erro ao resetar a busca:", error)
+    }
+  }
+
   return (
-    <SearchContext.Provider value={{ searchTerm, setSearchTerm, handleSearch }}>
+    <SearchContext.Provider value={{ searchTerm, setSearchTerm, handleSearch, resetSearch }}>
       {children}
     </SearchContext.Provider>
   )

@@ -1,5 +1,3 @@
-"use client"
-
 import type React from "react"
 import { useState } from "react"
 import { Rocket } from "lucide-react"
@@ -77,7 +75,7 @@ export const Header: React.FC<HeaderProps> = ({ onLogoClick, onProfileClick, onC
         isOpen={isSearchOpen}
         onClose={handleSearchClose}
         searchTerm={searchTerm}
-        onSearchChange={() => {}} // Função vazia já que não usamos mais
+        onSearchChange={() => {}} 
         onSearch={handleSearch}
         onCategoryClick={onCategoryClick}
       />

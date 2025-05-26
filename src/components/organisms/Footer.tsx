@@ -1,5 +1,3 @@
-"use client"
-
 import type React from "react"
 import { Rocket } from "lucide-react"
 import { Typography } from "@/components/atoms/Typography"

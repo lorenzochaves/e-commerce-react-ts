@@ -1,5 +1,3 @@
-"use client"
-
 import type React from "react"
 import { useState } from "react"
 import { Package, ShoppingBag, Calendar, DollarSign, X } from "lucide-react"
@@ -9,6 +7,7 @@ import { Avatar } from "@/components/atoms/Avatar"
 import { Badge } from "@/components/atoms/Badge"
 import { Icon } from "@/components/atoms/Icon"
 import { Card } from "@/components/atoms/Card"
+import { PriceDisplay } from "@/components/molecules/PriceDisplay" // 🆕
 import { useUser } from "@/context/user-context"
 import { formatDate } from "@/lib/utils"
 
@@ -43,11 +42,11 @@ export const UserProfile: React.FC<UserProfileProps> = ({ isOpen, onClose }) => 
       <Card variant="elevated" className="w-full max-w-4xl max-h-[90vh] overflow-hidden">
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-gray-800">
-          <Typography variant="h2" size="2xl" weight="bold">
+          <Typography variant="h2" size="2xl" weight="bold" className="tech-subtitle">
             User Profile
           </Typography>
           <Button variant="ghost" onClick={onClose} size="sm">
-            <Icon icon={X} size="lg" />
+            <Icon icon={X} size="lg" className="text-gray-400 hover:text-gray-300" />
           </Button>
         </div>
 
@@ -77,13 +76,13 @@ export const UserProfile: React.FC<UserProfileProps> = ({ isOpen, onClose }) => 
               <div className="flex items-center gap-4">
                 <Avatar src={user.avatar} alt={user.name} size="lg" />
                 <div>
-                  <Typography variant="h3" size="xl" weight="bold">
+                  <Typography variant="h3" size="xl" weight="bold" className="tech-subtitle">
                     {user.name}
                   </Typography>
-                  <Typography variant="p" color="muted">
+                  <Typography variant="p" color="muted" className="tech-text">
                     {user.email}
                   </Typography>
-                  <Typography variant="p" size="sm" color="muted">
+                  <Typography variant="p" size="sm" color="muted" className="tech-text">
                     Member since {formatDate(user.joinDate)}
                   </Typography>
                 </div>
@@ -93,7 +92,7 @@ export const UserProfile: React.FC<UserProfileProps> = ({ isOpen, onClose }) => 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <Card variant="elevated" padding="lg">
                   <div className="flex items-center gap-3">
-                    <Icon icon={ShoppingBag} size="xl" color="text-purple-400" />
+                    <Icon icon={ShoppingBag} size="xl" className="text-purple-400" /> {/* 🆕 */}
                     <div>
                       <Typography variant="p" size="2xl" weight="bold">
                         {stats.totalOrders}
@@ -107,11 +106,9 @@ export const UserProfile: React.FC<UserProfileProps> = ({ isOpen, onClose }) => 
 
                 <Card variant="elevated" padding="lg">
                   <div className="flex items-center gap-3">
-                    <Icon icon={DollarSign} size="xl" color="text-green-400" />
+                    <Icon icon={DollarSign} size="xl" className="text-green-400" /> {/* 🆕 */}
                     <div>
-                      <Typography variant="p" size="2xl" weight="bold">
-                        ${stats.totalSpent.toFixed(2)}
-                      </Typography>
+                      <PriceDisplay price={stats.totalSpent} size="lg" /> {/* 🆕 */}
                       <Typography variant="p" size="sm" color="muted">
                         Total Spent
                       </Typography>
@@ -121,7 +118,7 @@ export const UserProfile: React.FC<UserProfileProps> = ({ isOpen, onClose }) => 
 
                 <Card variant="elevated" padding="lg">
                   <div className="flex items-center gap-3">
-                    <Icon icon={Package} size="xl" color="text-blue-400" />
+                    <Icon icon={Package} size="xl" className="text-blue-400" /> {/* 🆕 */}
                     <div>
                       <Typography variant="p" size="2xl" weight="bold">
                         {stats.favoriteCategory}
@@ -140,7 +137,11 @@ export const UserProfile: React.FC<UserProfileProps> = ({ isOpen, onClose }) => 
             <div className="space-y-4">
               {orders.length === 0 ? (
                 <div className="text-center py-12">
-                  <Icon icon={Package} size="xl" color="text-gray-600" className="mx-auto mb-4" />
+                  <Icon 
+                    icon={Package} 
+                    size="xl" 
+                    className="text-gray-600 mx-auto mb-4" 
+                  />
                   <Typography variant="p" color="muted">
                     No orders yet
                   </Typography>
@@ -158,9 +159,7 @@ export const UserProfile: React.FC<UserProfileProps> = ({ isOpen, onClose }) => 
                         </Badge>
                       </div>
                       <div className="text-right">
-                        <Typography variant="p" color="primary" weight="bold">
-                          ${order.total.toFixed(2)}
-                        </Typography>
+                        <PriceDisplay price={order.total} size="lg" /> {/* 🆕 */}
                         <Typography variant="p" size="sm" color="muted">
                           {formatDate(order.orderDate)}
                         </Typography>
@@ -171,7 +170,10 @@ export const UserProfile: React.FC<UserProfileProps> = ({ isOpen, onClose }) => 
                       {order.items.map((item, index) => (
                         <div key={index} className="flex items-center gap-3 text-sm">
                           <img
-                            src={item.product.image || "/placeholder.svg"}
+                            src={
+                              item.product.image || 
+                              "https://via.placeholder.com/40x40/1f2937/8b5cf6?text=P" // 🆕
+                            }
                             alt={item.product.name}
                             className="w-10 h-10 rounded object-cover"
                           />
@@ -180,7 +182,7 @@ export const UserProfile: React.FC<UserProfileProps> = ({ isOpen, onClose }) => 
                               {item.product.name}
                             </Typography>
                             <Typography variant="p" size="sm" color="muted">
-                              Qty: {item.quantity} × ${item.priceAtTime.toFixed(2)}
+                              Qty: {item.quantity} × <PriceDisplay price={item.priceAtTime} size="sm" /> {/* 🆕 */}
                             </Typography>
                           </div>
                         </div>
@@ -190,7 +192,7 @@ export const UserProfile: React.FC<UserProfileProps> = ({ isOpen, onClose }) => 
                     {order.deliveryDate && (
                       <div className="mt-3 pt-3 border-t border-gray-700">
                         <div className="flex items-center gap-2 text-sm text-green-400">
-                          <Icon icon={Calendar} size="sm" />
+                          <Icon icon={Calendar} size="sm" className="text-green-400" />
                           Delivered on {formatDate(order.deliveryDate)}
                         </div>
                       </div>

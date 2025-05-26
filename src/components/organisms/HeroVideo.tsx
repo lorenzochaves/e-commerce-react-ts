@@ -24,7 +24,7 @@ export const HeroVideo: React.FC = () => {
         playsInline
         controls={false}
       >
-        <source src="/hero-video.mp4" type="video/mp4" />
+        <source src="/Videos/hero-video.mp4" type="video/mp4" />
         <div className="w-full h-full bg-gradient-to-br from-blue-900 via-purple-900 to-black" />
       </video>
 

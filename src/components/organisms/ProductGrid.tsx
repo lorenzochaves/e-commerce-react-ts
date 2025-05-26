@@ -1,5 +1,3 @@
-"use client"
-
 import type React from "react"
 import { ShoppingCart, ArrowRight } from "lucide-react"
 import { Typography } from "@/components/atoms/Typography"

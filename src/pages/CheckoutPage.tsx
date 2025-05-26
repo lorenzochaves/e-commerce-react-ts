@@ -47,7 +47,7 @@ const CheckoutPage: React.FC = () => {
     }, 2000)
   }
 
-  const { setSearchTerm } = useSearch()
+  const { setSearchTerm, resetSearch } = useSearch()
 
   const handleCategoryClick = (category: string) => {
     // Reset search term when navigating to a category
@@ -57,9 +57,8 @@ const CheckoutPage: React.FC = () => {
   }
   
   const goToHomepage = () => {
-    // Limpar termo de busca e redirecionar para a página inicial sem parâmetros
-    setSearchTerm("")
-    navigate('/', { replace: true })
+    // Usar a função centralizada para resetar busca e voltar para home
+    resetSearch()
   }
 
   const header = (

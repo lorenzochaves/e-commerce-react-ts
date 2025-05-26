@@ -1,5 +1,3 @@
-"use client"
-
 import type React from "react"
 import { User } from "lucide-react"
 import { Button } from "@/components/atoms/Button"
